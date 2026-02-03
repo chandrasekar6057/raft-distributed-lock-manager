@@ -146,3 +146,16 @@ This keeps the focus on core consensus logic, not boilerplate.
 - Client-side retries
 
 - Network partition simulation
+
+## 🔹 Optional Frontend (Cluster Visualization)
+
+A minimal frontend is included only to visualize cluster state.
+
+The frontend:
+- Polls `/cluster/status` from each node
+- Displays node role (Leader / Follower)
+- Shows current term and leader ID
+
+⚠️ The frontend does **not participate** in consensus and has **no impact** on correctness.
+All Raft logic runs entirely on the backend.
+
