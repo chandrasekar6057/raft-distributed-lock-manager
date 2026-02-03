@@ -1,0 +1,85 @@
+# ==================================================
+# COMMON CONFIG (applies to all nodes)
+# ==================================================
+spring:
+  threads:
+    virtual:
+      enabled: true
+
+cluster:
+  election:
+    timeout-ms: 3000
+  heartbeat:
+    interval-ms: 1000
+
+---
+# ==================================================
+# NODE 1
+# ==================================================
+spring:
+  config:
+    activate:
+      on-profile: node1
+
+server:
+  port: 8081            # HTTP / REST PORT
+
+cluster:
+  nodeId: neuron-01
+  tcp:
+    port: 9001          # RAFT / P2P PORT
+  peers:
+    neuron-02:
+      host: localhost
+      port: 9002
+    neuron-03:
+      host: localhost
+      port: 9003
+
+---
+# ==================================================
+# NODE 2
+# ==================================================
+spring:
+  config:
+    activate:
+      on-profile: node2
+
+server:
+  port: 8082
+
+cluster:
+  nodeId: neuron-02
+  tcp:
+    port: 9002
+  peers:
+    neuron01:
+      host: localhost
+      port: 9001
+    neuronf-03:
+      host: localhost
+      port: 9003
+
+---
+# ==================================================
+# NODE 3
+# ==================================================
+spring:
+  config:
+    activate:
+      on-profile: node3
+
+server:
+  port: 8083
+
+cluster:
+  nodeId: neuron-03
+  tcp:
+    port: 9003
+  peers:
+    neuron-01:
+      host: localhost
+      port: 9001
+    neuron-02:
+      host: localhost
+      port: 9002
